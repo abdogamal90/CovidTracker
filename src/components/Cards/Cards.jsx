@@ -11,12 +11,12 @@ const Cards = ({ data: { confirmed, recovered, deaths, lastUpdate }}) => {
   }
   return (
     <div className={styles.container}>
-      <Grid container spacing={3} justify="center">
+      <Grid container spacing={4} justify="center">
         <Grid item component={Card} xs={12} md={3} className={cx(styles.card, styles.infected)}>
           <CardContent>
             <Typography color="textSecondary" gutterBottom>Infected</Typography>
             <Typography variant="h5">
-              <CountUp start={0} end={confirmed.value} duration={300} separator = ',' /> 
+              <CountUp start={0} end={confirmed.value} duration={2.75} separator = ',' /> 
             <Typography variant = "body2">Number of active cases</Typography>
             </Typography>
             <Typography color='textSecondary'>{new Date(lastUpdate).toDateString()}</Typography>
@@ -31,7 +31,7 @@ const Cards = ({ data: { confirmed, recovered, deaths, lastUpdate }}) => {
               <CountUp
                 start={0}
                 end={confirmed.value}
-                duration={300}
+                duration={3}
                 separator=','
               />
             </Typography>
@@ -48,7 +48,7 @@ const Cards = ({ data: { confirmed, recovered, deaths, lastUpdate }}) => {
               <CountUp
                 start={0}
                 end={deaths.value}
-                duration={300}
+                duration={3}
                 separator=','
               />
             </Typography>
