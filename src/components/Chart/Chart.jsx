@@ -10,8 +10,9 @@ import {
   Title,
   Tooltip,
   Legend,
+  BarElement,
 } from 'chart.js';
-import { Line } from 'react-chartjs-2'
+import { Bar, Line } from 'react-chartjs-2'
 
 ChartJS.register(
   CategoryScale,
@@ -20,26 +21,49 @@ ChartJS.register(
   LineElement,
   Title,
   Tooltip,
-  Legend
+  Legend,
+  BarElement
 );
-function Chart() {
+function Chart({ data : {confirmed,deaths,recovered}, country }) {
   const [DailyData, setDailyData] = useState([])
 
   useEffect(() => {
     const fetchAPI = async () => {
       setDailyData(await fetchDailyData())
     }
-    console.log(DailyData)
     fetchAPI();
   }, [])
+  console.log(confirmed,recovered,deaths)
   return (
     <div className={styles.container}>
-      {DailyData[0] ?
+      { country ? 
+     
+          (
+            <Bar
+              data={{
+                labels: ['Infected', 'Recovered', 'Deaths'],
+                datasets: [{
+                  label: 'People',
+                  backgroundColor: [
+                    'rgba(0,0,255,0.5)',
+                    'rgba(0,255,0,0.5)',
+                    'rgba(255,0,0,0.5)',
+                  ],
+                  data: [confirmed.value, recovered.value, deaths.value]
+                }]
+
+              }}
+              options={{
+                legend: { display: false },
+                title: { display: true, text: `Current state in ${country}` },
+              }}
+            />
+        ) :
         (<Line
           data={{
             labels: DailyData.map(({ date }) => new Date(date).toLocaleDateString()),
             datasets: [{
-              data: DailyData.map(({confirmed} ) => confirmed),
+              data: DailyData.map(({ confirmed }) => confirmed),
               label: 'Infected',
               borderColor: '#3333ff',
               fill: true,
@@ -54,8 +78,12 @@ function Chart() {
           }}
 
 
-        />
-        ) : null}
+        />)
+
+      }
+    
+      
+      
     </div>
   )
 }
