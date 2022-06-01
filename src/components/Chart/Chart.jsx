@@ -24,7 +24,7 @@ ChartJS.register(
   Legend,
   BarElement
 );
-function Chart({ data : {confirmed,deaths,recovered}, country }) {
+function Chart({ data : {confirmed,deaths}, country }) {
   const [DailyData, setDailyData] = useState([])
 
   useEffect(() => {
@@ -33,7 +33,6 @@ function Chart({ data : {confirmed,deaths,recovered}, country }) {
     }
     fetchAPI();
   }, [])
-  console.log(confirmed,recovered,deaths)
   return (
     <div className={styles.container}>
       { country ? 
@@ -41,7 +40,7 @@ function Chart({ data : {confirmed,deaths,recovered}, country }) {
           (
             <Bar
               data={{
-                labels: ['Infected', 'Recovered', 'Deaths'],
+                labels: ['Infected', 'Deaths'],
                 datasets: [{
                   label: 'People',
                   backgroundColor: [
@@ -49,7 +48,7 @@ function Chart({ data : {confirmed,deaths,recovered}, country }) {
                     'rgba(0,255,0,0.5)',
                     'rgba(255,0,0,0.5)',
                   ],
-                  data: [confirmed.value, recovered.value, deaths.value]
+                  data: [confirmed.value, deaths.value],
                 }]
 
               }}
